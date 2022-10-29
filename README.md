@@ -1,5 +1,10 @@
-# Jarkom-Modul-2-ITA02-2022
-
+## Laporan Resmi Modul 2 Praktikum Jaringan Komputer 2022
+---
+### Kelompok ITA02:
+Calvindra Laksmono Kumoro - 5027201020  
+Faris Anwari - 50272010  
+Audyna Adinda - 50272010  
+    
 Dibuat topologi seperti berikut ini:
 ![2022-10-29 (2)](https://user-images.githubusercontent.com/58323466/198829379-e2036082-a79f-4c03-8dc1-1c9c3c4e0b34.png)
 
@@ -69,8 +74,53 @@ Lalu lakukan copy dengan `cp /etc/bind/db.local /etc/bind/wise/3.211.192.in-addr
 ![image](https://user-images.githubusercontent.com/58323466/198832386-c910bede-559f-4167-8c50-b35c03532e63.png)
 
 
-## BAGIAN ENDRO
-BLABLABLA
+## Soal 5
+Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama 
+## Jawaban No 5:
+untuk bisa membuat Berlint sebagai DNS Slave untuk domain utama, ketikkan nano /etc/bind/named.conf.local pada command di WISE. Dan masukkan syntax-syntax ini
+![user.txt](./img/5a.JPG), dimana 2.2 itu adalah slave dari berlint
+
+Kemudian kita harus memastikan sudah melakukan apt-get update dan memiliki bind9 dengan cara apt-get install bind9 -y karena Berlint akan dijadikan DNS Slave. Dan konfigurasi yang dilakukan pada Berlint untuk menjadi slave yaitu, ketikkan nano /etc/bind/named.conf.local dan masukkan ini:
+![user.txt](./img/5b.JPG)
+
+Kemudian restart bind9 dengan "service bind9 restart", dan memberhentikan dengan "service bind9 stop".
+
+
+
+## Soal 6
+Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operation yaitu operation.wise.yyy.com dengan alias www.operation.wise.yyy.com yang didelegasikan dari WISE ke Berlint dengan IP menuju ke Eden dalam folder operation 
+## Jawaban No 6:
+
+### Wise
+Pada Wise kami melakukan konfigurasi pada /etc/bind/wise/wise.ITA02.com dengan nano:
+![user.txt](./img/6a.JPG)
+dan ada tambahan barisan baru yaitu bagian ns1 dan operation yang digunakan menambahkan domain asli yaitu wise.ITA02.com dan nanti ada variabel ns1 yang mendahului wise, dimana variabel itu adalah operation. Dan disitu kita mengarahkannya pada 192.211.2.2(Berlint) karena berlint menjadi handler. 
+    Kemudian cek terlebih dahulu pada name.conf.local (nano/etc/bind/named.conf.local)
+    ![user.txt](./img/6b.JPG)
+    , dan bisa dilihat disini berlint menjadi subdomain pada syntax zone "operation.wise.ITA02.com"
+Kemudian pada web console berlint kita buat folder dengan syntax "mkdir /etc/bind/operation". Setelah itu kita copy dengan syntax "cp/etc/bind/db.local ke /etc/bind/operation/operation.wise.ITA02.com. Dan kita lihat isi filenya dengan syntax "nano /etc/bind/operation/operation.wise.ITA02.com
+ ![user.txt](./img/6c.JPG)
+ Bisa dilihat pada syntax mengarahkan dari subdomain ke  192.211.2.3. Dan CNAME itu untuk alias.
+
+
+## Soal 7
+Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses strix.operation.wise.yyy.com dengan alias www.strix.operation.wise.yyy.com yang mengarah ke Eden (7) 
+
+## Jawaban No 7:
+Pada nomor 7 tinggal menambahkan ini pada etc/bind/operation/operation.wise.ITA02.com dengan menggunakan nano, dan dimana awalnya hanya ada 3 baris saja sebelumnya.
+![user.txt](./img/7a.JPG)
+    Kita cek apabila berhasil dengan ping www.operation.wise.ITA02.com -c 3, ping strix.operation.wise.ITA02.com -c 3
+
+## Soal 8
+Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com
+
+## Jawaban No 8:
+Pertama pastikan dahulu kita sudah menginstall apache, php. Setelah itu ada folder baru namanya etc/apache2. Kemudian kita cd sites-available. Kemudian kita copy 000-default.conf ke wise.ITA02.com.conf dengan perintah cp. 
+Dan nantinya kita perlu ubah-ubah pada bagian ini sehingga menjadi seperti ini 
+![user.txt](./img/8a.JPG)
+    Kemudian kita cd /var/www, kemudian kita buat folder dengan mkdir wise, dan nanti masuk dengan cd wise.ITA02.com/. Kemudian kita wget -o "link dari zip", dan bisa kita rename filenya dengan contoh wise.zip. Dan kita perlu juga menginstall unzip. Setelah selesai mempunyai unzip, kita unzip wise.zip. Kemudian kita mkdir wise dan kita move dengan mv wise/* ke /var/www/wise.ITA02.com. Selanjutnya kita rm wise.zip dan rmdir wise.
+Kemudian kita lynx wise.ITA02.com akan menampilkan 
+![user.txt](./img/8b.JPG)
 
 
 ### Soal No 9
@@ -99,3 +149,19 @@ Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /err
 
 ### Jawaban No 12
 jawaban
+
+## Soal 13
+Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.eden.wise.yyy.com/public/js menjadi www.eden.wise.yyy.com/js 
+
+## Jawaban No 13:
+Kita tinggal mengubah, dengan masuk terlebih dahulu dengan syntax nano /etc/apache2/sites-available/e dan kita tambahkan ini 
+![user.txt](./img/13.JPG)
+
+## Soal 16
+dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke www.wise.yyy.com
+
+## Jawaban No 16:
+nano /etc/apache2/sites-available pada 000-default.conf. Dan kita tambahkan bagian ini 
+![user.txt](./img/16.JPG)
+Fungsi dari redirect permanent ini gunanya untuk me redirect yang seharusnya masuk pada destination sitenya.
+
