@@ -2,7 +2,7 @@
 ---
 ### Kelompok ITA02:
 Calvindra Laksmono Kumoro - 5027201020  
-Faris Anwari - 50272010  
+Faris Anwari - 5027201008
 Adinda Putri Audyna - 5027201073
     
 Dibuat topologi seperti berikut ini:
