@@ -1,9 +1,9 @@
 ## Laporan Resmi Modul 2 Praktikum Jaringan Komputer 2022
 ---
 ### Kelompok ITA02:
-Calvindra Laksmono Kumoro - 5027201020  
-Faris Anwari - 5027201008
-Adinda Putri Audyna - 5027201073
+1. Muhammad Faris Anwari (5027201008)
+2. Calvindra Laksmono Kumoro (5027201020)
+3. Adinda Putri Audyna (5027201073)
     
 Dibuat topologi seperti berikut ini:
 ![2022-10-29 (2)](https://user-images.githubusercontent.com/58323466/198829379-e2036082-a79f-4c03-8dc1-1c9c3c4e0b34.png)
